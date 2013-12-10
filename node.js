@@ -1,10 +1,11 @@
+"use strict";
 
 var Node = function(_x,_y) {
 	this.x = _x;
 	this.y = _y;
 };
 
-NODERADIUS = 4;
+var NODERADIUS = 4;
 
 Node.prototype.setPos = function(_x,_y)
 {
@@ -14,7 +15,7 @@ Node.prototype.setPos = function(_x,_y)
 
 Node.prototype.draw = function(ctx)
 {
-    drawCircle(ctx, this.x, this.y , NODERADIUS);
+    drawCircle (ctx, this.getPoint() , NODERADIUS);
 }
 
 Node.prototype.isInside = function(px,py)
@@ -22,4 +23,8 @@ Node.prototype.isInside = function(px,py)
     var dist = (px-this.x)*(px-this.x) + (py-this.y)*(py-this.y);
     var radius = (2*NODERADIUS)*(2*NODERADIUS);
     return dist <= radius;
+}
+
+Node.prototype.getPoint = function () {
+    return new Point(this.x, this.y);
 }

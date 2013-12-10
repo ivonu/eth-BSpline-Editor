@@ -1,3 +1,4 @@
+"use strict";
 
 var Knot = function(_value, _id, _isTimeKnot) {
     this.id = _id
@@ -5,12 +6,12 @@ var Knot = function(_value, _id, _isTimeKnot) {
     this.value = _value;
 };
 
-KNOTRADIUS = 5;
+var KNOTRADIUS = 5;
 
 Knot.prototype.draw = function(ctx)
 {
     var pos = timeToRuler(this.value, this.isTimeKnot);
-    drawCircle(ctx, pos.x, pos.y, KNOTRADIUS);
+    drawCircle (ctx, pos, KNOTRADIUS);
     var text = ""+this.id;
     if (this.isTimeKnot) {
         text = "t = "+this.value.toFixed(2); //fill 2

@@ -1,5 +1,6 @@
+"use strict";
 
-RLSTATE = {
+var RLSTATE = {
 	SelectKnot : 0,
 	MoveKnot : 1,
 	Idle : 2
@@ -48,8 +49,8 @@ function rlMouseRelease(evt)
 
 // ev. change something here too
 // change somewhere node to knots, or so...
-PAD_LEFT = 1;
-PAD_RIGHT = 2;
+var PAD_LEFT = 1;
+var PAD_RIGHT = 2;
 
 function timeToRuler(time, isTimeKnot)
 {
@@ -58,7 +59,7 @@ function timeToRuler(time, isTimeKnot)
     var px = domRuler.width * pos/length;
     var py = domRuler.height * (1 + 2*isTimeKnot)/4.0;
 
-    return {x: px, y: py};
+    return new Point (px, py);
 }
 
 function rulerToTime(px, py)

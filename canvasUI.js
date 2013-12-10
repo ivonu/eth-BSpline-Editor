@@ -1,5 +1,6 @@
+"use strict";
 
-CVSTATE = {
+var CVSTATE = {
 	AddPoint : 0,
 	SelectPoint : 1,
 	MovePoint : 2,

@@ -1,7 +1,8 @@
+"use strict";
 
-showConstruction = false;
-showNodeConnections = true;
-showBezierNodes = false;
+var showConstruction = false;
+var showNodeConnections = true;
+var showBezierNodes = false;
 
 var Curve = function() {
 	this.timeKnot = new Knot(0,0,true);
@@ -15,7 +16,7 @@ Curve.prototype.draw = function(ctx)
 		// Connect nodes with a line
         setColors(ctx,'rgb(10,70,160)');
         for (var i = 1; i < this.nodes.length; i++) {
-            drawLine(ctx, this.nodes[i-1].x, this.nodes[i-1].y, this.nodes[i].x, this.nodes[i].y);
+            drawLine (ctx, this.nodes[i-1], this.nodes[i]);
         }
 		// Draw nodes
 		setColors(ctx,'rgb(10,70,160)','white');
@@ -23,29 +24,26 @@ Curve.prototype.draw = function(ctx)
 			this.nodes[i].draw(ctx);
 		}
     }
-
-	ctx.lineWidth = 2;
+    
+	// Draw the curve
+    ctx.lineWidth = 2;
     setColors(ctx,'black');
-    
-	// TODO: Draw the curve
-    // you can use: drawLine(ctx, x1, y1, x2, y2);
-    
+    drawCurve(ctx, this);
+
 	ctx.lineWidth = 1;
 
     if (this.nodes.length >= 4) {
-		// TODO: Show how the curve is constructed
-		// you can use: drawLine(ctx, x1, y1, x2, y2);
-		// you can use: drawCircle(ctx, x, y, radius);
-
 
         // De Boor construction
         if (showConstruction) {
-			
-			// ...
-			
+            if (this.timeKnot.value >= this.knots[2].value &&
+                this.timeKnot.value <  this.knots[this.knots.length - 3].value) {
+
+                drawConstruction (ctx, evaluateBSpline (this.timeKnot.value, this));
+            }
         }
 
-        // Bézier node construction
+        // BÃ©zier node construction
         if (showBezierNodes) {
             
 			// ...
@@ -61,7 +59,7 @@ Curve.prototype.addNode = function(x,y)
         this.knots.push(new Knot(0,0,false));
         this.knots.push(new Knot(1,1,false));
         this.knots.push(new Knot(2,2,false));
-        // add 2 more knots
+        // ev. add 2 more knots
     } else {
         this.knots.push(new Knot(this.knots.length,this.knots.length,false));
     }
