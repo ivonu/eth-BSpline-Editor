@@ -45,9 +45,26 @@ Curve.prototype.draw = function(ctx)
 
         // Bézier node construction
         if (showBezierNodes) {
-            
-			// ...
 
+            if (this.timeKnot.value >= this.knots[2].value &&
+                this.timeKnot.value <  this.knots[this.knots.length - 3].value) {
+
+                var i;
+                for (i = 2; i < this.knots.length - 3; i++) {
+                    if (this.timeKnot.value >= this.knots[i].value &&
+                        this.timeKnot.value < this.knots[i+1].value) break;
+                }
+
+                var t1 = this.knots[i].value;
+                var t2 = this.knots[i+1].value;
+
+                var p1 = evaluateBezier (t1, t1, t1, this);
+                var p2 = evaluateBezier (t1, t1, t2, this);
+                var p3 = evaluateBezier (t1, t2, t2, this);
+                var p4 = evaluateBezier (t2, t2, t2, this);
+
+                drawBezier (ctx, p1, p2, p3, p4);
+            }
         }
     }
 }

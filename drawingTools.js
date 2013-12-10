@@ -47,38 +47,52 @@ function drawCurve (ctx, curve) {
     var v1 = curve.knots[2].value;
     var v2 = curve.knots[curve.knots.length - 3].value;
 
-    var p1 = evaluateBSpline (v1, curve);
+    var p1 = evaluateBSpline (v1, curve).p;
 
     for (var i = 0; i < samples; i++) {
         var t = v1 + (v2 - v1) / samples * i;
-        var p2 = evaluateBSpline (t, curve).p43;
+        var p2 = evaluateBSpline (t, curve).p;
         drawLine (ctx, p1, p2);
         p1 = p2;
     }
 }
 
-function drawConstruction (ctx, p) {
-    setColors(ctx,'red', 'red');
-    drawCircle (ctx, p.p10, 4);
-    drawCircle (ctx, p.p20, 4);
-    drawCircle (ctx, p.p30, 4);
-    drawCircle (ctx, p.p40, 4);
-    drawLine (ctx, p.p10, p.p20);
-    drawLine (ctx, p.p20, p.p30);
-    drawLine (ctx, p.p30, p.p40);
+function drawConstruction (ctx, construction) {
+    setColors  (ctx,'red', 'red');
+    drawCircle (ctx, construction.p10, 4);
+    drawCircle (ctx, construction.p20, 4);
+    drawCircle (ctx, construction.p30, 4);
+    drawCircle (ctx, construction.p40, 4);
+    drawLine   (ctx, construction.p10, construction.p20);
+    drawLine   (ctx, construction.p20, construction.p30);
+    drawLine   (ctx, construction.p30, construction.p40);
 
-    setColors(ctx,'orange', 'orange');
-    drawCircle (ctx, p.p21, 2);
-    drawCircle (ctx, p.p31, 2);
-    drawCircle (ctx, p.p41, 2);
-    drawLine (ctx, p.p21, p.p31);
-    drawLine (ctx, p.p31, p.p41);
+    setColors  (ctx,'orange', 'orange');
+    drawCircle (ctx, construction.p21, 2);
+    drawCircle (ctx, construction.p31, 2);
+    drawCircle (ctx, construction.p41, 2);
+    drawLine   (ctx, construction.p21, construction.p31);
+    drawLine   (ctx, construction.p31, construction.p41);
 
-    setColors(ctx,'yellow', 'yellow');
-    drawCircle (ctx, p.p32, 2);
-    drawCircle (ctx, p.p42, 2);
-    drawLine (ctx, p.p32, p.p42);
+    setColors  (ctx,'yellow', 'yellow');
+    drawCircle (ctx, construction.p32, 2);
+    drawCircle (ctx, construction.p42, 2);
+    drawLine   (ctx, construction.p32, construction.p42);
 
-    setColors(ctx,'green', 'green');
-    drawCircle (ctx, p.p43, 2);
+    setColors  (ctx,'green', 'green');
+    drawCircle (ctx, construction.p, 2);
+}
+
+function drawBezier (ctx, p1, p2, p3, p4) {
+
+    setColors(ctx,'gray', 'gray');
+
+    drawCircle (ctx, p1, 4);
+    drawCircle (ctx, p2, 4);
+    drawCircle (ctx, p3, 4);
+    drawCircle (ctx, p4, 4);
+
+    drawLine   (ctx, p1, p2);
+    drawLine   (ctx, p2, p3);
+    drawLine   (ctx, p3, p4);
 }
